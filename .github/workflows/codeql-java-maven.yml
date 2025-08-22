@@ -62,7 +62,11 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: java-kotlin
-          build-mode: autobuild
+          build-mode: manual
+
+      # Build project
+      - name: Build with Maven
+        run: mvn -B compile
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3

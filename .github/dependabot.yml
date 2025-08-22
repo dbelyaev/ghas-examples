@@ -1,0 +1,14 @@
+version: 2
+
+updates:
+  - package-ecosystem: "maven"
+    commit-message:
+      prefix: "deps(maven)"
+    cooldown:
+      default-days: 5
+      semver-major-days: 15
+      semver-minor-days: 7
+      semver-patch-days: 3
+    directory: "/java-examples/maven"
+    schedule:
+      interval: "weekly"

@@ -1,0 +1,80 @@
+# This workflow is designed to run CodeQL analysis on a simple Java project.
+name: "CodeQL Java Maven ☕"
+
+# Always set explicit permissions for workflows.
+# In this case we give it no permissions by default and rather set them explicitly in the job.
+permissions: {}
+
+on:
+  # Trigger on every push to the main (default) branch.
+  # Ensures that the main branch is always analyzed.
+  push:
+    branches: [ "main" ]
+  # Trigger on pull requests targeting the main branch.
+  # Ensures that pull requests are analyzed before merging.
+  pull_request:
+    branches: [ "main" ]
+  # Trigger on a schedule to run the analysis periodically.
+  # Ensures that the code is regularly scanned, even if no changes are made - so that if new scan rules release, they will be used on the codebase.
+  schedule:
+    # Run at 01:36 AM every Wednesday
+    - cron: '36 1 * * 3'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    # Set an explicit timeout. Default/not setting is 6 hours.
+    # Ensures that we are not using resources longer than expected.
+    timeout-minutes: 30
+
+    # Set the default working directory for all steps in this job.
+    # As we have multiple java examples in our repository.
+    defaults:
+      run:
+        working-directory: ./java-examples/maven/
+
+    permissions:
+      # Required as the workflow needs to upload (write) any findings to the security tab.
+      security-events: write
+
+      # Required to fetch internal or private CodeQL packs
+      packages: read
+
+      # Required to read the repository contents for analysis.
+      actions: read
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # Add any setup steps before running the `github/codeql-action/init` action.
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java-kotlin
+          build-mode: manual
+
+      # Build project
+      - name: Build Java
+        shell: bash
+        run: |
+          # Build Maven project with proper settings
+          mvn clean package -DskipTests -B -ntp
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          # Which "category" will the analysis be uploaded to.
+          # Normally one would use the "/language:java-kotlin" category, but as we have multiple different java examples in this repositry, we use a custom one.
+          # Reflected in the "grouping" one sees on the PR checks.      
+          category: "java-maven-simple"

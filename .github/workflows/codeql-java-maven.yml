@@ -62,14 +62,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: java-kotlin
-          build-mode: manual
-
-      # Build project
-      - name: Build Java
-        shell: bash
-        run: |
-          # Build Maven project with proper settings
-          mvn clean package -DskipTests -B -ntp
+          build-mode: autobuild
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
@@ -77,4 +70,4 @@ jobs:
           # Which "category" will the analysis be uploaded to.
           # Normally one would use the "/language:java-kotlin" category, but as we have multiple different java examples in this repositry, we use a custom one.
           # Reflected in the "grouping" one sees on the PR checks.      
-          category: "java-maven-simple"
+          category: "java-maven"

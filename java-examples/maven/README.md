@@ -1,35 +1,9 @@
 # Java Maven Example
 
-This is a simple Java project using Java 21 and Maven for dependency management. The example demonstrates the use of Lombok for Slf4j logging annotations.
+* :mag_right: **CodeQL scan configuration:** See [/.github/workflows/codeql-java-maven.yml](/.github/workflows/codeql-java-maven.yml)  
+* :package: **Dependabot configuration:** See the "Java Maven" section in [/.github/dependabot.yml](/.github/dependabot.yml)
 
-## Project Structure
+Java and Maven are both supported "out of the box" by GHAS and one can normally just use the default CodeQL setup and get the desired results.
+The above CodeQL workflow is provided to show how a advanced configuration would look like.
 
-- `pom.xml`: Maven configuration file with dependencies and build plugins
-- `src/main/java/com/example/Application.java`: Main application class with Lombok's @Slf4j annotation
-
-## Dependencies
-
-- Java 21
-- Lombok
-- SLF4J API
-- SLF4J Simple binding
-
-## Building and Running
-
-To build the project:
-
-```bash
-mvn clean package
-```
-
-To run the application:
-
-```bash
-java -jar target/maven-example-1.0-SNAPSHOT.jar
-```
-
-Expected output:
-
-```text
-[main] INFO com.example.Application - Hello, world!
-```
+As Maven uses `pom.xml` (aka "**P**roject **O**bject **M**odel" file) which serves as manifest for Maven project, Dependabot will be able to detect the dependencies and both create security alerts and manage automatic dependency updates.

@@ -1,6 +1,7 @@
 version: 2
 
 updates:
+  # Java Maven
   - package-ecosystem: "maven"
     commit-message:
       prefix: "deps(maven)"

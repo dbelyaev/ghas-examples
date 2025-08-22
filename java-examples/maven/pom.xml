@@ -16,7 +16,7 @@
         <slf4j-api.version>2.0.9</slf4j-api.version>
         <slf4j-simple.version>2.0.9</slf4j-simple.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
     </properties>
 
     <dependencies>
